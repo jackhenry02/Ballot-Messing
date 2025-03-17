@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <title>Cambridge Account - Loading Session Information</title>
+        <script>
+"use strict";
+function readLocalStorage(key) {
+    var success;
+    try {
+        var value = localStorage.getItem(key);
+        if (value != null) {
+            document.form1["shib_idp_ls_value." + key].value = value;
+        }
+        success = "true";
+    } catch (e) {
+        success = "false";
+        document.form1["shib_idp_ls_exception." + key].value = e;
+    }
+    document.form1["shib_idp_ls_success." + key].value = success;
+}
+
+function isLocalStorageSupported() {
+    try {
+        localStorage.setItem("shib_idp_ls_test", "shib_idp_ls_test");
+        localStorage.removeItem("shib_idp_ls_test");
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+        </script>
+        <link rel="stylesheet" href="/stylesheets/custom.css?build=202303301735" />
+        <link rel="stylesheet" href="/stylesheets/spinner.css?build=202303301735" />
+    </head>
+    <body onload="doLoad()">
+      <div class="outer">
+       <div class="middle">
+        <div class="win-scroll">
+          <div class="flex-column">
+            <div id="lightbox">
+              <div class="lightbox-cover"></div>
+              <div>
+                <img  id="bannerLogo"
+                      class="banner-logo ext-banner-logo"
+                      src="/images/cambridge-logo.png" />
+              </div>
+              <div class="preloader" align="center">
+                <div class='loader'>
+                  <div class="bg"></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                  <div class='circle'></div>
+                </div>
+              </div>
+              <div class="redirect-type-block" align="center">
+                <span class="redirect-type-block-text">
+                  Loading login session information from the browser...
+                  </span>
+                  <noscript>
+                      <div class="no-js-content">
+                      Your browser either does not support JavaScript or it is being blocked. Please, enable JavaScript in your browser or use one which supports it.
+                      </div>
+                  </noscript>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-bar">
+          <a target="_blank" href="https://www.uis.cam.ac.uk/privacy-notice">Privacy policy</a>
+          <a target="_blank" href="https://shib.raven.cam.ac.uk/cookie-policy.html">Cookie policy</a>
+          <a target="_blank" href="https://help.uis.cam.ac.uk/service/accounts-passwords">Help</a>
+      </div>
+    </div>
+<form name="form1" action="/idp/profile/SAML2/Redirect/SSO?execution=e1s1" method="post">
+        <input name="shib_idp_ls_exception.shib_idp_session_ss" type="hidden" />
+        <input name="shib_idp_ls_success.shib_idp_session_ss" type="hidden" value="false" />
+        <input name="shib_idp_ls_value.shib_idp_session_ss" type="hidden" />
+        <input name="shib_idp_ls_exception.shib_idp_persistent_ss" type="hidden" />
+        <input name="shib_idp_ls_success.shib_idp_persistent_ss" type="hidden" value="false" />
+        <input name="shib_idp_ls_value.shib_idp_persistent_ss" type="hidden" />
+    <input name="shib_idp_ls_supported" type="hidden" />
+    <input name="_eventId_proceed" type="hidden" />
+    <noscript>
+        <input type="submit" value="Continue" />
+    </noscript>
+</form>
+
+<script>
+<!--
+function doLoad() {
+    var localStorageSupported = isLocalStorageSupported();
+    document.form1["shib_idp_ls_supported"].value = localStorageSupported;
+    if (localStorageSupported) {
+        readLocalStorage("shib_idp_session_ss");
+        readLocalStorage("shib_idp_persistent_ss");
+    }
+    document.form1.submit();
+}
+// -->
+</script>    </body>
+</html>
